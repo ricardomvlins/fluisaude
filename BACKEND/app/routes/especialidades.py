@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 
+from app.utils.auth import admin_required
 from app.controllers.especialidades_controller import (
     create_especialidade,
     delete_especialidade,
@@ -12,6 +13,7 @@ especialidades_bp = Blueprint("especialidades", __name__)
 
 
 @especialidades_bp.route("/", methods=["POST"])
+@admin_required
 def create():
     try:
         especialidade = create_especialidade(request.get_json() or {})
@@ -35,6 +37,7 @@ def get_by_id(especialidade_id: int):
 
 
 @especialidades_bp.route("/<int:especialidade_id>", methods=["PUT"])
+@admin_required
 def update(especialidade_id: int):
     try:
         especialidade = update_especialidade(especialidade_id, request.get_json() or {})
@@ -46,6 +49,7 @@ def update(especialidade_id: int):
 
 
 @especialidades_bp.route("/<int:especialidade_id>", methods=["DELETE"])
+@admin_required
 def delete(especialidade_id: int):
     try:
         delete_especialidade(especialidade_id)

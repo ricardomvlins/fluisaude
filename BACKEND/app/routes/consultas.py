@@ -9,6 +9,30 @@ def listar_consultas():
 
 @consulta_bp.route("/", methods=["POST"])
 def criar_consulta():
+    """
+    Criar consulta
+    ---
+    tags:
+      - Consultas
+    parameters:
+      - in: body
+        name: body
+        schema:
+          type: object
+          properties:
+            paciente_id:
+              type: integer
+              example: 1
+            medico_id:
+              type: integer
+              example: 2
+            data:
+              type: string
+              example: 2026-03-15
+    responses:
+      201:
+        description: Consulta criada
+    """
     data = request.get_json()
     consulta = ConsultaController.criar(data)
     return jsonify(consulta), 201

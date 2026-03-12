@@ -52,11 +52,13 @@ def create_app():
     from .routes.especialidades import especialidades_bp
     from .routes.consultas import consulta_bp
     from .routes.medico import medico_bp
+    from .routes.auth import auth_bp
 
     app.register_blueprint(pacientes_bp, url_prefix='/api/pacientes')
     app.register_blueprint(especialidades_bp, url_prefix='/api/especialidades')
     app.register_blueprint(consulta_bp, url_prefix='/api/consultas')
     app.register_blueprint(medico_bp, url_prefix='/api/medicos')
+    app.register_blueprint(auth_bp, url_prefix='/api/auth')
 
     with app.app_context():
         db.create_all()

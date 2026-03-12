@@ -52,4 +52,4 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     DEBUG = False
     _env_url = os.environ.get("DATABASE_URL")
-    SQLALCHEMY_DATABASE_URI = normalize_database_url(_env_url) or sqlite_uri()  
+    SQLALCHEMY_DATABASE_URI = normalize_database_url(_env_url) or sqlite_uri()

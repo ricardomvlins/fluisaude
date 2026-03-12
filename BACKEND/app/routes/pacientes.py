@@ -32,6 +32,33 @@ def get_paciente(paciente_id: int):
 
 @pacientes_bp.route("/", methods=["POST"])
 def create_paciente():
+    """
+    Criar paciente
+    ---
+    tags:
+      - Pacientes
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          properties:
+            nome:
+              type: string
+              example: João Silva
+            cpf:
+              type: string
+              example: 12345678900
+            telefone:
+              type: string
+              example: 81999999999
+    responses:
+      201:
+        description: Paciente criado com sucesso
+      400:
+        description: Erro de validação
+    """
     data = request.get_json() or {}
     try:
         paciente = pacientes_controller.create_paciente(data)

@@ -4,8 +4,8 @@ from datetime import datetime
 class Consulta(db.Model):
     __tablename__ = 'consultas'
     id = db.Column(db.Integer, primary_key=True)
-    paciente_id = db.Column(db.Integer, nullable=False)
-    medico_id = db.Column(db.Integer, nullable=False)
+    paciente_id = db.Column(db.Integer, db.ForeignKey("pacientes.id"), nullable=False)
+    medico_id = db.Column(db.Integer, db.ForeignKey("medicos.id"), nullable=False)
     data_agendamento = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     status = db.Column(db.String(50), nullable=False, default='agendada')
 

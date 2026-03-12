@@ -1,12 +1,35 @@
 from flask import Blueprint, jsonify, request
 
+from app.utils.auth import admin_required
 from app.controllers import medico_controller
 
 medico_bp = Blueprint("medico", __name__)
 
 
 @medico_bp.route("/", methods=["post"])
+@admin_required
 def create_medico():
+    """
+    Criar médico
+    ---
+    tags:
+      - Médicos
+    parameters:
+      - in: body
+        name: body
+        schema:
+          type: object
+          properties:
+            nome:
+              type: string
+              example: Dr João
+            especialidade_id:
+              type: integer
+              example: 1
+    responses:
+      201:
+        description: Médico criado
+    """
     try:
         medico = medico_controller.create_medico(request.get_json() or {})
     except ValueError as exc:
@@ -26,6 +49,7 @@ def get_medico(medico_id: int):
     return jsonify(medico.to_dict()), 200
 
 @medico_bp.route("/<int:medico_id>", methods=["put"])
+@admin_required
 def update_medico(medico_id: int):
     try:
         medico = medico_controller.update_medico(medico_id, request.get_json() or {})
@@ -34,6 +58,7 @@ def update_medico(medico_id: int):
     return jsonify(medico.to_dict()) 
 
 @medico_bp.route("/<int:medico_id>", methods=["delete"])
+@admin_required
 def delete_medico(medico_id: int):
     medico_controller.delete_medico(medico_id)
     return jsonify({"message": "Medico deletado com sucesso"})
